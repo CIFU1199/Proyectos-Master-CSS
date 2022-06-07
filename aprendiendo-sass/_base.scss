@@ -7,7 +7,7 @@ $color-secundario: rgb(132, 22, 22);
 
 // uso de variables
 body{
-    background-color: $color-fondo;
+    //background-color: $color-fondo;
 }
 
 h1{
@@ -43,10 +43,93 @@ p{
         }
     }
 }
-
-@mixin crearBordes() {
-    border: 5px solid red;
-    border-radius: 10px;
-    box-shadow: 0px 0px 5px black;
-}
 //mixins / funciones 
+@mixin crearBordes($color, $size, $shadow) {
+    border: $size solid $color;
+    border-radius: 10px;
+    box-shadow: 0px 0px $size $shadow;
+}
+
+.caja{
+    @include  crearBordes(red , 10px, black );
+}
+
+.listado{
+    @include  crearBordes(green, 5px , yellow );
+}
+
+
+//herencia
+%alert-normal{
+    border: 1px solid gray;
+    background: #eee;
+    color: gray;
+    margin: 20px auto;
+    padding: 10px;
+    width: 80%;
+}
+
+.alert{
+    @extend %alert-normal;
+}
+
+.alert-danger{
+    @extend %alert-normal;
+    color: red;
+    border-color: red;
+}
+.alert-success{
+    @extend %alert-normal;
+    color: green;
+    border-color: green;
+}
+
+//operadores 
+.clearfix{
+    clear: both;
+}
+
+h1{
+    font-size: 20px + 5px -1px;
+}
+
+$caja:200px;
+$wrap:900px;
+
+.cajas{
+    width: 900px;
+    margin: 0px auto;
+}
+
+.caja{
+    float: left;
+    width: $caja / $wrap * 100%;
+    margin: 10px;
+}
+
+//condicionales 
+//if 
+h1{
+    @if $color-fondo == #ccc{
+        color: black;
+    }@else if $color-fondo == black{
+        color: lightcoral;
+    }@else{
+        color: pink;
+    }
+}
+
+
+
+//FOR
+$contador : 1;
+@for $contador from 1 through 10{
+    .listado ul li:nth-child(#{$contador}){
+        font-size: $contador * 2px ;
+    }
+}
+
+
+//EACH
+
+//WHILE
